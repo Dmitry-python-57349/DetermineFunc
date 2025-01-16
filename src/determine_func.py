@@ -1,3 +1,6 @@
+TypeErrorMessage = "Incorrect offset. Offset must be <str>, <float>, <byte> or <int>."
+ValueErrorMessage = "Invalid literal for int() with base 10: <{offset}>."
+NotFoundMessage = "Offset not found."
 
 
 def get_score(game_stamps, offset):
@@ -9,9 +12,9 @@ def get_score(game_stamps, offset):
         offset = int(offset)
     except (TypeError, ValueError) as exc:
         if isinstance(exc, ValueError):
-            return f"Invalid literal for int() with base 10: <{offset}>."
-        return "Incorrect offset. Offset must be <str>, <float>, <byte> or <int>."
+            return ValueErrorMessage.format(offset=offset)
+        return TypeErrorMessage
     for stamp in game_stamps:
         if int(offset) == stamp["offset"]:
             return stamp["score"]["home"], stamp["score"]["away"]
-    return "Offset not found."
+    return NotFoundMessage
